@@ -1,0 +1,302 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Akhio';
+  src: url('/fonts/Ahkio-W00-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-black text-white;
+  }
+}
+
+@layer components {
+  .nav-link {
+    @apply text-white hover:text-yellow-400 transition-colors font-akhio text-lg;
+  }
+
+  .btn-primary {
+    @apply bg-[#C19A6B] text-white py-3 px-6 rounded-md font-akhio text-lg 
+           transition-all duration-300 ease-in-out transform
+           hover:bg-[#A37F5A] hover:scale-105 hover:shadow-lg
+           active:scale-95 active:shadow-inner
+           focus:outline-none focus:ring-2 focus:ring-[#C19A6B] focus:ring-opacity-50;
+  }
+
+  .btn-secondary {
+    @apply border-2 border-black text-black py-3 px-6 rounded-md font-akhio text-lg
+           transition-all duration-300 ease-in-out transform
+           hover:bg-gray-100 hover:scale-105 hover:shadow-lg
+           active:scale-95 active:shadow-inner
+           focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50;
+  }
+
+  
+  .hand-drawn-icon {
+    @apply w-6 h-6 transition-colors duration-200 flex items-center justify-center mx-auto;
+  }
+
+  .hand-drawn-icon path,
+  .hand-drawn-icon circle,
+  .hand-drawn-icon rect {
+    @apply transition-all duration-200;
+  }
+
+  .hand-drawn-icon:hover path,
+  .hand-drawn-icon:hover circle,
+  .hand-drawn-icon:hover rect {
+    @apply stroke-yellow-400;
+  }
+}
+
+/* Hide videos on mobile devices */
+@media (max-width: 768px) {
+  video {
+    display: none !important;
+  }
+}
+
+.swiper-pagination-bullet {
+  background: white !important;
+  opacity: 0.5;
+}
+
+.swiper-pagination-bullet-active {
+  opacity: 1;
+}
+
+/* Hide default Swiper navigation buttons */
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  display: none;
+}
+
+/* Swiper navigation button styles */
+.swiper-button-prev,
+.swiper-button-next {
+  width: 40px !important;
+  height: 40px !important;
+  margin: 0 !important;
+  transform: translateY(-50%) !important;
+}
+
+/* Custom navigation icons size */
+.swiper-button-prev svg,
+.swiper-button-next svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Animation classes */
+.animate-in {
+  opacity: 1 !important;
+  transform: translate(0, 0) !important;
+}
+
+/* Ensure smooth animations */
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity;
+}
+
+/* Pattern animation */
+@keyframes slidePattern {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+
+/* Loading animations */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin-slow {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 1.5s linear infinite;
+}
+
+/* Background gradients */
+.hero {
+  background: #866f3a;
+}
+
+.heropattern {
+  background-image: url(https://frdmalzedskscaopornt.supabase.co/storage/v1/object/public/media/images/clean-gray-paper2.png);
+    xbackground-attachment: fixed;
+} 
+
+.herogold  {
+  /*background: 
+  radial-gradient(ellipse farthest-corner at left top, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 60%),
+  radial-gradient(ellipse farthest-corner at right top, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 60%),
+  linear-gradient(to top, #d8cfb8 0%, #d8cfb8 40%, transparent 100%);
+transition: all 0.3s ease-in-out;*/
+  background: radial-gradient(ellipse farthest-corner at left top, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%),
+              radial-gradient(ellipse farthest-corner at right top, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 90%),
+              linear-gradient(to top, #cbc4b0 0%, #c3bca8 100%),
+              linear-gradient(to top, #cbc4b0 0%, #c3bca8 100%);
+
+  transition: all 0.3s ease-in-out;
+
+}
+
+
+
+
+/* Section styles */
+.section-padding {
+  @apply py-20 md:py-32;
+}
+
+.container-padding {
+  @apply px-4 sm:px-6 lg:px-8;
+}
+
+.swiper-pagination-bullet {display:none;}
+
+
+
+  .border-b-8 {border-bottom-width: 0px; border-color: #866f3a!important;border-bottom-style: solid; background:#dad4c1;}
+
+
+.bg-white\/90 {
+    background-color: rgb(255 255 255 / 0.5);
+}
+
+.bg-custom {
+  background: #c3bca8;
+  opacity:1;
+}
+
+
+.opacity-20 {
+  opacity:0.1;
+}
+
+.opacity-50 {
+  opacity:0.5;
+}
+
+body {
+font-family: "Roboto", sans-serif;
+}
+
+.btn-primary {
+ box-shadow: 0 3px 6px rgba(180, 171, 148, 0.16),
+            0 3px 6px rgba(190, 181, 158, 0.4),
+            inset 0 -2px 5px 1px rgba(200, 191, 168, 1),
+            inset 0 -1px 1px 3px rgba(226, 217, 194, 1);
+  
+  background-image: linear-gradient(160deg, rgb(196, 187, 164), rgb(206, 197, 174), rgb(216, 207, 184), rgb(206, 197, 174), rgb(196, 187, 164));
+  
+ border: 1px solid rgb(216, 207, 184);
+    color: #333333;
+  font-size: 120%;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  text-transform:uppercase;
+  letter-spacing: 0.16em;
+}
+
+.btn-primary:focus,
+.btn-primary:hover {
+    xbackground-size: 150% 150%;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19),
+                0 6px 6px rgba(0, 0, 0, 0.23),
+                inset 0 -2px 5px 1px #b17d10,
+                inset 0 -1px 1px 3px rgba(250, 227, 133, 1);
+    border: 1px solid rgba(165, 93, 7, 0.6);
+    color: #444444;
+  --tw-scale-x: 1;
+    --tw-scale-y: 1;
+}
+
+.btn-primary:active {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16),
+                0 3px 6px rgba(110, 80, 20, 0.4),
+                inset 0 -2px 5px 1px #b17d10,
+                inset 0 -1px 1px 3px rgba(250, 227, 133, 1);
+}
+
+.btn-primary:disabled {
+    pointer-events: none;
+    opacity: .65;
+    color: #7e7e7e;
+    background: #dcdcdc;
+    box-shadow: none;
+    text-shadow: none;
+    border-color: #c2c2c2;
+}
+
+.parallaxbg {
+background: url(https://mdfeywsadyvaqhsdbxqb.supabase.co/storage/v1/object/public/images//mamiwata-bwww.png);
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-position: 30% 50%;
+}
+
+a.h-12 {
+    height: 4rem;
+}
+
+.bg-beige {
+  background-color: rgba(255,255,255, .3);
+}
+
+.text-beige {
+  color: #F5F5DC;
+}
+.text-brown {
+color: #333;
+}
+
+.myfont {
+  font-family: "Roboto", sans-serif;
+  font-weight:600;
+}
+
+.myrotate1 {
+  transform: rotate(2deg)!important;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1)!important;
+   
+}
+
+.myrotate2 {
+  transform: rotate(-1deg)!important;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1)!important;
+    
+  
+}
+
+.myrotate3 {
+  transform: rotate(-3deg)!important;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1)!important;
+    
+    
+}

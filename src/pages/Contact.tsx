@@ -1,0 +1,94 @@
+import React from 'react';
+import SimpleLayout from '../components/SimpleLayout';
+import ContactForm from '../components/ContactForm';
+import { useTranslation } from '../hooks/useTranslation';
+import { useScrollToTop } from '../hooks/useScrollToTop';
+import { motion } from 'framer-motion';
+import { HandDrawnMail, HandDrawnPhone, HandDrawnMapPin } from '../components/icons';
+
+const Contact: React.FC = () => {
+  const { t } = useTranslation();
+  useScrollToTop();
+  
+  return (
+    <SimpleLayout>
+      {/* Hero Section */}
+      <section className="relative h-[40vh] flex items-center justify-center overflow-hidden hero">
+         {/* Gold gradient background */}
+        <div className="absolute inset-0 z-10 hero heropattern"></div>
+        <div className="relative z-10 mt-16 text-center text-beige">
+          <h1 className="font-akhio text-4xl md:text-6xl mb-4">{t('contact.title')}</h1>
+          <p className="text-xl max-w-2xl mx-auto px-4">
+            {t('contact.subtitle')}
+          </p>
+        </div>
+      </section>
+
+      {/* Contact Information */}
+      <section className="py-20 bg-custom">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-3 gap-8 mb-16">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="text-center p-6 bg-beige myrotate1 rounded-lg hero heropattern"
+            >
+              <HandDrawnMail className="w-8 h-8 mx-auto mb-4 text-brown" />
+              <h3 className=" text-3xl mb-2 font-akhio text-brown">{t('contact.info.email.title')}</h3>
+              <a href={`mailto:${t('contact.info.email.value')}`} className="text-brown hover:text-yellow-600 transition-colors">
+                {t('contact.info.email.value')}
+              </a>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-center p-6 bg-beige myrotate2 rounded-lg hero heropattern"
+            >
+              <HandDrawnPhone className="w-8 h-8 mx-auto mb-4 text-brown" />
+              <h3 className="text-3xl mb-2 font-akhio text-brown">{t('contact.info.phone.title')}</h3>
+              <a href={`tel:${t('contact.info.phone.value')}`} className="text-brown hover:text-yellow-600 transition-colors">
+                {t('contact.info.phone.value')}
+              </a>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="text-center p-6 bg-beige myrotate3 rounded-lg hero heropattern"
+            >
+              <HandDrawnMapPin className="w-8 h-8 mx-auto mb-4 text-brown" />
+              <h3 className="text-3xl mb-2 font-akhio text-brown">{t('contact.info.address.title')}</h3>
+              <div className="text-brown">
+                {t('contact.info.address.lines').map((line, index) => (
+                  <p key={index}>{line}</p>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+
+          <div className="max-w-3xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="text-beige p-8 rounded-lg shadow-sm hero heropattern"
+            >
+              <h2 className="font-akhio text-3xl mb-6 text-center text-beige">{t('contact.form.title')}</h2>
+              <ContactForm />
+            </motion.div>
+          </div>
+        </div>
+      </section>
+    </SimpleLayout>
+  );
+};
+
+export default Contact;
