@@ -3,7 +3,6 @@ import Layout from '../components/layout/Layout';
 import { useTranslation } from '../hooks/useTranslation';
 import { useScrollToTop } from '../hooks/useScrollToTop';
 import { motion } from 'framer-motion';
-import HorizontalBar from '../components/HorizontalBar';
 
 const About: React.FC = () => {
   const { t } = useTranslation();
@@ -75,20 +74,37 @@ const About: React.FC = () => {
       </section>
 
       {/* Story Section */}
-      <section className="py-20  hero heropattern">
+      <section className="py-32 hero heropattern">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 parallaxbg">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="grid md:grid-cols-2 gap-12 items-stretch">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
+              className="relative h-[500px]"
+            >
+              <img
+                src="https://mdfeywsadyvaqhsdbxqb.supabase.co/storage/v1/object/public/images//beermeile.jpg"
+                alt="DjuDju Beer Mile"
+                className="w-full h-full object-cover rounded-lg shadow-lg"
+              />
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="h-[500px] flex flex-col justify-center"
             >
               <h2 className="font-akhio text-beige text-4xl md:text-5xl mb-6">{t('about.story.title')}</h2>
               <div className="space-y-4 text-xl text-beige">
-                {t('about.story.content').map((paragraph: string, index: number) => (
-                  <p key={index}>{paragraph}</p>
-                ))}
+                {Array.isArray(t('about.story.content')) ? 
+                  t('about.story.content').map((paragraph: string, index: number) => (
+                    <p key={index}>{paragraph}</p>
+                  )) : 
+                  <p>{t('about.story.content')}</p>
+                }
               </div>
             </motion.div>
           </div>
@@ -111,17 +127,22 @@ const About: React.FC = () => {
 
           <div className="grid md:grid-cols-3 gap-8">
             {[
-                    {
-                ...t('about.team.members.brewer'),
+              {
+                name: t('about.team.members.brewer.name'),
+                role: t('about.team.members.brewer.role'),
+                description: t('about.team.members.brewer.description'),
                 image: 'https://mdfeywsadyvaqhsdbxqb.supabase.co/storage/v1/object/public/images//andy1.jpg',
               },
               {
-                ...t('about.team.members.ceo'),
+                name: t('about.team.members.ceo.name'),
+                role: t('about.team.members.ceo.role'),
+                description: t('about.team.members.ceo.description'),
                 image: 'https://mdfeywsadyvaqhsdbxqb.supabase.co/storage/v1/object/public/images//rontos1.png',
               },
-
               {
-                ...t('about.team.members.innovation'),
+                name: t('about.team.members.innovation.name'),
+                role: t('about.team.members.innovation.role'),
+                description: t('about.team.members.innovation.description'),
                 image: 'https://mdfeywsadyvaqhsdbxqb.supabase.co/storage/v1/object/public/images//frank1.png',
               },
             ].map((member, index) => (
