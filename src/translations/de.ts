@@ -13,7 +13,7 @@ export const de: Translation = {
   },
   hero: {
     title: 'Djudju Bier Familie',
-    subtitle: 'Entdecke die feinsten Geschmäcker der Natur',
+    subtitle: 'Ready to taste magic?',
   },
   beers: {
     ingredients: {
