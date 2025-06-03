@@ -12,11 +12,9 @@ import { useAgeVerification } from './hooks/useAgeVerification';
 import { useCookieConsent } from './hooks/useCookieConsent';
 import { useScrollToTop } from './hooks/useScrollToTop';
 import { useAudio } from './context/AudioContext';
+import videoCache from './utils/videoCache';
 
 const ASSET_BASE_URL = 'https://mdfeywsadyvaqhsdbxqb.supabase.co/storage/v1/object/public/images/';
-
-// Singleton cache for preloaded videos
-const videoCache: { [url: string]: HTMLVideoElement } = {};
 
 interface Flavor {
   name: string;
@@ -66,7 +64,7 @@ const App: React.FC = () => {
   }, [handleScroll]);
 
   useEffect(() => {
-    if (!videoRef.current) return;
+    if (!showVideo || !videoRef.current) return;
 
     const video = videoRef.current;
 
@@ -98,7 +96,7 @@ const App: React.FC = () => {
       video.removeEventListener('error', handleError);
       video.removeEventListener('loadeddata', handleLoadedData);
     };
-  }, [heroBackgroundUrl]);
+  }, [showVideo, videoRef, heroBackgroundUrl]);
 
   useEffect(() => {
     if (!modalVideoRef.current) return;
@@ -136,6 +134,7 @@ const App: React.FC = () => {
   }, [modalVideoUrl, isVideoModalOpen]);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
     const checkScreen = () => setShowVideo(window.innerWidth >= 768);
     checkScreen();
     window.addEventListener('resize', checkScreen);
@@ -291,8 +290,20 @@ const App: React.FC = () => {
             </div>
           )}
 
+          {/* Spinner overlay while video is loading */}
+          {showVideo && !isVideoLoaded && (
+            <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/30 transition-opacity duration-500">
+              <img
+                src="/images/djudju-logo.png"
+                alt="Loading..."
+                className="w-20 h-20 animate-spin"
+                style={{ filter: 'drop-shadow(0 0 8px #F5E8C7)' }}
+              />
+            </div>
+          )}
+
           {/* Content layer */}
-          <div className="relative z-10 mt-0  text-center text-beige w-full md:mt-32">
+          <div className={`relative z-10 mt-0 text-center text-beige w-full md:mt-32 transition-opacity duration-700 ${isVideoLoaded ? 'opacity-100' : 'opacity-0'}`}>
             <h1 className="font-akhio mt-4 text-4xl md:text-6xl font-bold mb-2">{t('hero.title')}</h1>
             <p className=" newfont text-lg md:text-xl mb-4">{t('hero.subtitle')}</p>
 

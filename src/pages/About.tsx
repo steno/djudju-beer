@@ -1,22 +1,95 @@
-import React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import Layout from '../components/layout/Layout';
 import { useTranslation } from '../hooks/useTranslation';
 import { useScrollToTop } from '../hooks/useScrollToTop';
 import { motion } from 'framer-motion';
+import videoCache from '../utils/videoCache';
+
+const ASSET_BASE_URL = 'https://mdfeywsadyvaqhsdbxqb.supabase.co/storage/v1/object/public/images/';
 
 const About: React.FC = () => {
   const { t } = useTranslation();
   useScrollToTop();
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [videoError, setVideoError] = useState<string | null>(null);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const [showVideo, setShowVideo] = useState(false);
+
+  const heroBackgroundUrl = `${ASSET_BASE_URL}mainherobg-comp.mp4`;
+
+  useEffect(() => {
+    if (!showVideo || !videoRef.current) return;
+
+    const video = videoRef.current;
+
+    const handleError = () => {
+      setVideoError('Error loading video');
+      setIsVideoLoaded(true);
+    };
+
+    const handleLoadedData = () => {
+      setVideoError(null);
+      setIsVideoLoaded(true);
+      video.play().catch(error => {
+        setVideoError(`Error playing video: ${error.message}`);
+      });
+    };
+
+    video.addEventListener('error', handleError);
+    video.addEventListener('loadeddata', handleLoadedData);
+
+    if (!video.src) {
+      video.src = heroBackgroundUrl;
+    }
+
+    return () => {
+      video.removeEventListener('error', handleError);
+      video.removeEventListener('loadeddata', handleLoadedData);
+    };
+  }, [showVideo, videoRef, heroBackgroundUrl]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const checkScreen = () => setShowVideo(window.innerWidth >= 768);
+    checkScreen();
+    window.addEventListener('resize', checkScreen);
+    return () => window.removeEventListener('resize', checkScreen);
+  }, []);
 
   return (
     <Layout>
       {/* Hero Section */}
       <section className="relative h-[40vh] flex items-center justify-center overflow-hidden">
         {/* Gold gradient background */}
-        <div className="absolute inset-0 z-10 hero heropattern"></div>
-
+        <div className="absolute inset-0 z-10 hero"></div>
+        {/* Pattern background */}
+        <div className="absolute inset-0 z-20 heropattern"></div>
+        {/* Video layer (hidden on mobile) - now above pattern */}
+        {showVideo && (
+          <div className="absolute inset-0 w-full h-full opacity-20" style={{ zIndex: 30 }}>
+            <video
+              ref={videoRef}
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              crossOrigin="anonymous"
+              className={`absolute inset-0 w-full h-full object-top object-cover ${
+                !isVideoLoaded ? 'opacity-0' : 'opacity-100'
+              } transition-opacity duration-300`}
+            />
+            {videoError && (
+              <div className="absolute inset-0 bg-gray-800 text-white flex items-center justify-center">
+                <p>{videoError}</p>
+              </div>
+            )}
+          </div>
+        )}
+        {/* Overlay for readability */}
+        <div className="absolute inset-0 z-40 bg-black/40 md:bg-black/20"></div>
         {/* Content */}
-        <div className="relative z-20 text-center mt-16 text-beige">
+        <div className="relative z-50 text-center mt-16 text-beige">
           <h1 className="font-akhio text-4xl md:text-6xl mb-4">{t('about.title')}</h1>
           <p className="text-xl max-w-2xl mx-auto px-4">{t('about.subtitle')}</p>
         </div>
@@ -82,12 +155,12 @@ const About: React.FC = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="relative h-[500px]"
+              className="relative h-96 md:h-[500px]"
             >
               <img
                 src="https://mdfeywsadyvaqhsdbxqb.supabase.co/storage/v1/object/public/images//beermeile.jpg"
                 alt="DjuDju Beer Mile"
-                className="w-full h-full object-cover rounded-lg shadow-lg"
+                className="w-full h-96 md:h-full object-cover rounded-lg shadow-lg"
               />
             </motion.div>
             <motion.div
@@ -95,7 +168,7 @@ const About: React.FC = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="h-[500px] flex flex-col justify-center"
+              className="md:h-[500px] flex flex-col justify-center"
             >
               <h2 className="font-akhio text-beige text-4xl md:text-5xl mb-6">{t('about.story.title')}</h2>
               <div className="space-y-4 text-xl text-beige">
