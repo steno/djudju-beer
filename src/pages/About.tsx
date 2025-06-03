@@ -17,6 +17,11 @@ const About: React.FC = () => {
 
   const heroBackgroundUrl = `${ASSET_BASE_URL}mainherobg-comp.mp4`;
 
+  // Story section video
+  const storyVideoRef = useRef<HTMLVideoElement>(null);
+  const [isStoryVideoLoaded, setIsStoryVideoLoaded] = useState(false);
+  const storyVideoUrl = heroBackgroundUrl;
+
   useEffect(() => {
     if (!showVideo || !videoRef.current) return;
 
@@ -55,6 +60,15 @@ const About: React.FC = () => {
     window.addEventListener('resize', checkScreen);
     return () => window.removeEventListener('resize', checkScreen);
   }, []);
+
+  useEffect(() => {
+    if (!showVideo || !storyVideoRef.current) return;
+    const video = storyVideoRef.current;
+    const handleLoadedData = () => setIsStoryVideoLoaded(true);
+    video.addEventListener('loadeddata', handleLoadedData);
+    if (!video.src) video.src = storyVideoUrl;
+    return () => video.removeEventListener('loadeddata', handleLoadedData);
+  }, [showVideo, storyVideoRef, storyVideoUrl]);
 
   return (
     <Layout>
@@ -147,8 +161,29 @@ const About: React.FC = () => {
       </section>
 
       {/* Story Section */}
-      <section className="py-32 hero heropattern">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 parallaxbg">
+      <section className="py-32 hero heropattern relative overflow-hidden">
+        {/* Video background for desktop only */}
+        {showVideo && (
+          <div className="absolute inset-0 w-full h-full opacity-20 z-0 pointer-events-none hidden md:block">
+            <video
+              ref={storyVideoRef}
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              crossOrigin="anonymous"
+              className={`absolute inset-0 w-full h-full object-top object-cover ${
+                !isStoryVideoLoaded ? 'opacity-0' : 'opacity-100'
+              } transition-opacity duration-300`}
+            />
+          </div>
+        )}
+        {/* Overlay for readability */}
+        {showVideo && (
+          <div className="absolute inset-0 z-10 bg-black/30 md:bg-black/10 pointer-events-none"></div>
+        )}
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 parallaxbg z-20">
           <div className="grid md:grid-cols-2 gap-12 items-stretch">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
