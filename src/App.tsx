@@ -45,6 +45,7 @@ const App: React.FC = () => {
   const [currentFlavorIndex, setCurrentFlavorIndex] = useState(0);
   const modalVideoRef = useRef<HTMLVideoElement>(null);
   const modalVideoUrl = `${ASSET_BASE_URL}djudjucommercial.webm`;
+  const [showVideo, setShowVideo] = useState(false);
 
   useScrollToTop();
 
@@ -133,6 +134,13 @@ const App: React.FC = () => {
       video.removeEventListener('error', handleError);
     };
   }, [modalVideoUrl, isVideoModalOpen]);
+
+  useEffect(() => {
+    const checkScreen = () => setShowVideo(window.innerWidth >= 768);
+    checkScreen();
+    window.addEventListener('resize', checkScreen);
+    return () => window.removeEventListener('resize', checkScreen);
+  }, []);
 
   const flavors: Flavor[] = useMemo(
     () => [
@@ -261,29 +269,27 @@ const App: React.FC = () => {
           <div className="absolute inset-0 heropattern" style={{ zIndex: 2 }} />
 
           {/* Video layer */}
-          <div className="absolute inset-0 opacity-20 w-full h-full" style={{ zIndex: 3 }}>
-            {isVideo && (
-              <>
-                <video
-                  ref={videoRef}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  preload="auto"
-                  crossOrigin="anonymous"
-                  className={`absolute inset-0 w-full h-full object-cover ${
-                    !isVideoLoaded ? 'opacity-0' : 'opacity-100'
-                  } transition-opacity duration-300`}
-                />
-                {videoError && (
-                  <div className="absolute inset-0 bg-gray-800 text-white flex items-center justify-center">
-                    <p>{videoError}</p>
-                  </div>
-                )}
-              </>
-            )}
-          </div>
+          {showVideo && isVideo && (
+            <div className="absolute inset-0 opacity-20 w-full h-full" style={{ zIndex: 3 }}>
+              <video
+                ref={videoRef}
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="auto"
+                crossOrigin="anonymous"
+                className={`absolute inset-0 w-full h-full object-cover ${
+                  !isVideoLoaded ? 'opacity-0' : 'opacity-100'
+                } transition-opacity duration-300`}
+              />
+              {videoError && (
+                <div className="absolute inset-0 bg-gray-800 text-white flex items-center justify-center">
+                  <p>{videoError}</p>
+                </div>
+              )}
+            </div>
+          )}
 
           {/* Content layer */}
           <div className="relative z-10 mt-0  text-center text-beige w-full md:mt-32">
