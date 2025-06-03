@@ -13,7 +13,7 @@ export const de: Translation = {
   },
   hero: {
     title: 'Djudju Bier Familie',
-    subtitle: 'Ready to taste magic?',
+    subtitle: 'Entdecke die feinsten Geschmäcker der Natur',
   },
   beers: {
     ingredients: {
@@ -60,9 +60,9 @@ export const de: Translation = {
     story: {
       title: 'Die DjuDju Reise',
       content: [
-        'DjuDju-Priester und -Priesterinnen waren spirituelle und praktische Heiler. Auch nicht-medizinische Getränke wurden zu Feierlichkeiten gebraut, zum Beispiel zu Hochzeiten oder Geburten. DjuDju wurde nach alten Rezepten und Traditionen in großen Tontöpfen zubereitet und den Gästen von der DjuDju-Königin in Kalebassen serviert. Hier liegt der Ursprung der modernen DjuDju-Fruchtbiere.',
-'Motiviert durch das große positive Feedback von Besuchern Ghanas, beschloss die Familie Tagoe, in Zusammenarbeit mit einer internationalen Brauerei Fruchtbier nach ihrem Geheimrezept auch außerhalb des Landes zu vertreiben.',
-'Der Verkauf von DjuDju Banane und Passionsfrucht begann mit einem ersten vielversprechenden Versuch in London und Berlin. Das Ergebnis war ein voller Erfolg. Ermutigt durch diesen Durchbruch werden bald weitere DjuDju-Sorten ihren Weg in die Läden finden. Na dann, "Twa Omanye aba – Prost!""',
+        'DjuDju-Priester und -Priesterinnen waren spirituelle und praktische Heiler. Auch nicht-medizinische Getränke wurden zu Feierlichkeiten gebraut, zum Beispiel zu Hochzeiten oder Geburten. Hier liegt der Ursprung der DjuDju-Fruchtbiere. DjuDju wurde nach alten Rezepten und Traditionen in großen Tontöpfen hergestellt und den Gästen seit jeher von der DjuDju-Königin in Kalebassen serviert.',
+        'DjuDju wurde nach alten Rezepten und Traditionen in großen Tontöpfen hergestellt und den Gästen seit jeher von der DjuDju-Königin in Kalebassen serviert. Motiviert durch das große positive Feedback der Besucher Ghanas beschloss die Familie Tagoe, in Zusammenarbeit mit einer internationalen Brauerei Fruchtbier nach ihrem Geheimrezept auch außerhalb des Landes zu vertreiben.',
+        'Der Verkauf von DjuDju Banane und Passionsfrucht begann mit einem ersten vielversprechenden Versuch in London und Berlin. Das Ergebnis war ein voller Erfolg. Ermutigt durch diesen Durchbruch werden bald weitere DjuDju-Sorten ihren Weg in die Läden finden. Na dann, Twa Omanye aba – Prost!',
       ],
     },
     team: {

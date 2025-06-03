@@ -8,7 +8,7 @@ export const en: Translation = {
     privacy: 'Privacy',
     contact: 'Contact',
   },
-    video: {
+  video: {
     playButton: 'Dont Miss Your Chance',
   },
   hero: {

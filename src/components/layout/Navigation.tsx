@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom'; // Add useLocation
+import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from '../../hooks/useTranslation';
 import { useLanguage } from '../../context/LanguageContext';
@@ -11,7 +11,6 @@ const Navigation: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { t } = useTranslation();
   const { language, setLanguage } = useLanguage();
-  const location = useLocation(); // Add useLocation hook
 
   useEffect(() => {
     const handleScroll = () => {
@@ -70,14 +69,12 @@ const Navigation: React.FC = () => {
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex md:items-center md:space-x-8">
-              {location.pathname !== '/' && ( // Conditionally render homepage link
-                <Link
-                  to="/"
-                  className="text-beige hover:text-yellow-400 transition-colors text-lg"
-                >
-                  {t('navigation.home')}
-                </Link>
-              )}
+              <Link
+                to="/"
+                className="text-beige hover:text-yellow-400 transition-colors text-lg"
+              >
+                {t('navigation.home')}
+              </Link>
               <Link
                 to="/about"
                 className="text-beige hover:text-yellow-400 transition-colors text-lg"
@@ -125,15 +122,13 @@ const Navigation: React.FC = () => {
               className="md:hidden bg-black/80 backdrop-blur-lg"
             >
               <div className="px-4 pt-2 pb-3 space-y-3">
-                {location.pathname !== '/' && ( // Conditionally render homepage link
-                  <Link
-                    to="/"
-                    className="block text-white hover:text-yellow-400 transition-colors text-lg py-2"
-                    onClick={closeMobileMenu}
-                  >
-                    {t('navigation.home')}
-                  </Link>
-                )}
+                <Link
+                  to="/"
+                  className="block text-white hover:text-yellow-400 transition-colors text-lg py-2"
+                  onClick={closeMobileMenu}
+                >
+                  {t('navigation.home')}
+                </Link>
                 <Link
                   to="/about"
                   className="block text-white hover:text-yellow-400 transition-colors text-lg py-2"

@@ -62,6 +62,7 @@ font-size: 2rem!important;}
   .ring-beige {
     border-color: beige!imort;
   }
+
   .hand-drawn-icon {
     @apply w-6 h-6 transition-colors duration-200 flex items-center justify-center mx-auto;
   }
@@ -221,7 +222,6 @@ font-size: 2rem!important;}
 }
 
 
-
 .opacity-20 {
   opacity:0.1;
 }
@@ -260,7 +260,7 @@ font-family: "Roboto", sans-serif;
                 inset 0 -1px 1px 3px rgba(250, 227, 133, 1);
     border: 1px solid rgba(165, 93, 7, 0.6);
     color: #444444;
- --tw-scale-x: 1;
+  --tw-scale-x: 1;
   --tw-scale-y: 1;
   background-color: red;
 }
@@ -283,7 +283,7 @@ font-family: "Roboto", sans-serif;
 }
 
 .parallaxbg {
-background: url(https://mdfeywsadyvaqhsdbxqb.supabase.co/storage/v1/object/public/images//mamiwata-bg-c
+    background: url(https://mdfeywsadyvaqhsdbxqb.supabase.co/storage/v1/object/public/images//mamiwata-bg-c
   ww.png);
     background-size: 48%;
     background-repeat: no-repeat;

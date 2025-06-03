@@ -14,7 +14,7 @@ const AgeVerification: React.FC<AgeVerificationProps> = ({ onVerify }) => {
       <div className="bg-white rounded-lg p-8 max-w-md w-full text-center">
         <h2 className="text-4xl  text-gray-900 font-bold mb-6">Welcome!</h2>
         <p className="text-2xl  text-gray-900 mb-8">
-          {language === 'en' ? 'Are you 16 or older?' : 'Bist du 16 oder älter?'}
+          {language === 'en' ? 'Are you 18 or older?' : 'Bist du 18 oder älter?'}
         </p>
         
         <div className="space-y-4">
@@ -22,14 +22,14 @@ const AgeVerification: React.FC<AgeVerificationProps> = ({ onVerify }) => {
             onClick={() => onVerify(true)}
             className="w-full btn-primary"
           >
-            {language === 'en' ? 'I am 16+' : 'Ich bin 16+'}
+            {language === 'en' ? 'I am 18+' : 'Ich bin 18+'}
           </button>
           
           <button
             onClick={() => onVerify(false)}
             className="myfont w-full btn-secondary"
           >
-            {language === 'en' ? 'I am under 16' : 'Ich bin unter 16'}
+            {language === 'en' ? 'I am under 18' : 'Ich bin unter 18'}
           </button>
         </div>
 

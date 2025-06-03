@@ -13,7 +13,6 @@ import { useCookieConsent } from './hooks/useCookieConsent';
 import { useScrollToTop } from './hooks/useScrollToTop';
 import { useAudio } from './context/AudioContext';
 
-
 const ASSET_BASE_URL = 'https://mdfeywsadyvaqhsdbxqb.supabase.co/storage/v1/object/public/images/';
 
 // Singleton cache for preloaded videos
@@ -324,59 +323,57 @@ const App: React.FC = () => {
             </div>
 
             {/* Mobile View with Framer Motion */}
-<div className="md:hidden w-full px-4">
-  <div className="relative">
-    <div className="relative w-full max-w-[400px] h-[60vh] mx-auto">
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={currentFlavorIndex}
-          variants={flavorVariants}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-          className="absolute inset-0 flex flex-col items-center justify-center"
-        >
-          <button
-            onClick={() => handleFlavorClick(flavors[currentFlavorIndex].name)}
-            onKeyDown={(e) => handleKeyDown(e, flavors[currentFlavorIndex].name)}
-            className="cursor-pointer focus:outline-none relative"
-            aria-label={`View ${flavors[currentFlavorIndex].name} details`}
-            role="button"
-            tabIndex={0}
-          >
-            <img
-              src={flavors[currentFlavorIndex].bottleImage}
-              alt={`${flavors[currentFlavorIndex].name} bottle`}
-              className="h-[50vh] w-auto object-contain max-w-full"
-              loading="lazy"
-            />
-          </button>
-          <span className="bcap mt-4 text-beige text-xl font-semibold bg-black/70 px-4 py-2 rounded-sm shadow-md pointer-events-none">
-            {flavors[currentFlavorIndex].name}
-          </span>
-        </motion.div>
-      </AnimatePresence>
+            <div className="md:hidden w-full px-4">
+              <div className="relative">
+                <div className="relative w-full max-w-[400px] h-[60vh] mx-auto">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={currentFlavorIndex}
+                      variants={flavorVariants}
+                      initial="initial"
+                      animate="animate"
+                      exit="exit"
+                      className="absolute inset-0 flex flex-col items-center justify-center"
+                    >
+                      <button
+                        onClick={() => handleFlavorClick(flavors[currentFlavorIndex].name)}
+                        onKeyDown={(e) => handleKeyDown(e, flavors[currentFlavorIndex].name)}
+                        className="cursor-pointer focus:outline-none relative"
+                        aria-label={`View ${flavors[currentFlavorIndex].name} details`}
+                        role="button"
+                        tabIndex={0}
+                      >
+                        <img
+                          src={flavors[currentFlavorIndex].bottleImage}
+                          alt={`${flavors[currentFlavorIndex].name} bottle`}
+                          className="h-[50vh] w-auto object-contain max-w-full"
+                          loading="lazy"
+                        />
+                      </button>
+                      <span className="bcap mt-4 text-beige text-xl font-semibold bg-black/70 px-4 py-2 rounded-sm shadow-md pointer-events-none">
+                        {flavors[currentFlavorIndex].name}
+                      </span>
+                    </motion.div>
+                  </AnimatePresence>
 
-      {/* Custom Navigation Buttons */}
-      <button
-        className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-black/40 backdrop-blur-sm hover:bg-black/50 text-white p-2 rounded-full shadow-lg transition-all duration-200"
-        onClick={prevFlavor}
-        aria-label="Previous flavor"
-      >
-        <HandDrawnChevronLeft />
-      </button>
-      <button
-        className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-black/40 backdrop-blur-sm hover:bg-black/50 text-white p-2 rounded-full shadow-lg transition-all duration-200"
-        onClick={nextFlavor}
-        aria-label="Next flavor"
-      >
-        <HandDrawnChevronRight />
-      </button>
-    </div>
-
-    
-  </div>
-</div>
+                  {/* Custom Navigation Buttons */}
+                  <button
+                    className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-black/40 backdrop-blur-sm hover:bg-black/50 text-white p-2 rounded-full shadow-lg transition-all duration-200"
+                    onClick={prevFlavor}
+                    aria-label="Previous flavor"
+                  >
+                    <HandDrawnChevronLeft />
+                  </button>
+                  <button
+                    className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-black/40 backdrop-blur-sm hover:bg-black/50 text-white p-2 rounded-full shadow-lg transition-all duration-200"
+                    onClick={nextFlavor}
+                    aria-label="Next flavor"
+                  >
+                    <HandDrawnChevronRight />
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 

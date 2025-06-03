@@ -78,21 +78,7 @@ const About: React.FC = () => {
       <section className="py-20  hero heropattern">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 parallaxbg">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-           
             <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="relative h-[500px] rounded-lg overflow-hidden"
-            >
-              <img
-                src="https://mdfeywsadyvaqhsdbxqb.supabase.co/storage/v1/object/public/images//beermeile.jpg"
-                alt="Brewing process"
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-            </motion.div>
-             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
