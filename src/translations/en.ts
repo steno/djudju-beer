@@ -7,7 +7,7 @@ export const en: Translation = {
     about: 'About',
     privacy: 'Privacy',
     contact: 'Contact',
-    impressum: 'Impressum',
+    impressum: 'Legal Notice',
   },
   video: {
     playButton: 'Dont Miss Your Chance',
