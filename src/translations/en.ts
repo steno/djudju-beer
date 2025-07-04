@@ -7,6 +7,7 @@ export const en: Translation = {
     about: 'About',
     privacy: 'Privacy',
     contact: 'Contact',
+    impressum: 'Impressum',
   },
   video: {
     playButton: 'Dont Miss Your Chance',
@@ -186,5 +187,47 @@ export const en: Translation = {
       title: 'Contact',
     },
     rights: '© 2024 Djudju Beer. All rights reserved.',
+  },
+  impressum: {
+    title: 'Legal Notice',
+    subtitle: 'Information according to § 5 TMG',
+    company: {
+      title: 'Company Information',
+      address: {
+        line1: 'Konradinstraße 5',
+        line2: '12105 Berlin',
+        line3: 'Germany',
+      },
+    },
+    contact: {
+      title: 'Contact Information',
+      phone: 'Phone',
+      email: 'Email',
+      website: 'Website',
+    },
+    representatives: {
+      title: 'Legal Representatives',
+      ceo: 'CEO',
+      cofounder: 'Co-Founder',
+      cofounder2: 'Co-Founder',
+    },
+    register: {
+      title: 'Commercial Register',
+      court: 'Register Court',
+      number: 'Register Number',
+      vat: 'VAT ID',
+    },
+    responsibility: {
+      title: 'Content Responsibility',
+      content: 'According to § 55 Abs. 2 RStV, the person responsible for the content of this website is:',
+      person: 'Responsible Person',
+      address: 'Responsible Address',
+    },
+    disclaimer: {
+      title: 'Disclaimer',
+      content: 'The contents of our pages have been created with the utmost care. However, we cannot guarantee the accuracy, completeness and timeliness of the content. As a service provider, we are responsible for our own content on these pages in accordance with § 7 paragraph 1 TMG. According to §§ 8 to 10 TMG, however, we as a service provider are not obliged to monitor transmitted or stored third-party information or to investigate circumstances that indicate illegal activity.',
+      links: 'Our offer contains links to external third-party websites, over whose content we have no influence. Therefore, we cannot assume any liability for these external contents. The respective provider or operator of the pages is always responsible for the content of the linked pages. The linked pages were checked for possible legal violations at the time of linking. Illegal content was not recognizable at the time of linking. However, a permanent content control of the linked pages is not reasonable without concrete evidence of a violation of the law. Upon notification of violations, we will remove such links immediately.',
+      copyright: 'The contents and works created by the site operators on these pages are subject to German copyright law. The duplication, processing, distribution and any kind of exploitation outside the limits of copyright require the written consent of the respective author or creator. Downloads and copies of this site are only permitted for private, non-commercial use. Insofar as the content on this site was not created by the operator, the copyrights of third parties are respected. In particular, third-party content is marked as such. Should you nevertheless become aware of a copyright infringement, we ask for a corresponding notice. Upon notification of violations, we will remove such content immediately.',
+    },
   },
 };

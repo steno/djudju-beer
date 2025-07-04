@@ -44,6 +44,11 @@ const Footer: React.FC = () => {
                   {t('navigation.privacy')}
                 </Link>
               </li>
+              <li>
+                <Link to="/impressum" className="text-beige opacity-70 hover:text-yellow-400 transition-colors">
+                  {t('navigation.impressum')}
+                </Link>
+              </li>
             </ul>
           </div>
 

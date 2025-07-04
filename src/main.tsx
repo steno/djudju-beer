@@ -7,6 +7,7 @@ import App from './App';
 import About from './pages/About';
 import Privacy from './pages/Privacy';
 import Contact from './pages/Contact';
+import Impressum from './pages/Impressum';
 import './index.css';
 import './fonts/stylesheet.css';
 
@@ -22,6 +23,7 @@ root.render(
             <Route path="/about" element={<About />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/impressum" element={<Impressum />} />
           </Routes>
         </BrowserRouter>
       </AudioProvider>

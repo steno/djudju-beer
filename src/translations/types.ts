@@ -5,6 +5,10 @@ export interface Translation {
     about: string;
     privacy: string;
     contact: string;
+    impressum: string;
+  };
+  video: {
+    playButton: string;
   };
   hero: {
     title: string;
@@ -158,5 +162,47 @@ export interface Translation {
       title: string;
     };
     rights: string;
+  };
+  impressum: {
+    title: string;
+    subtitle: string;
+    company: {
+      title: string;
+      address: {
+        line1: string;
+        line2: string;
+        line3: string;
+      };
+    };
+    contact: {
+      title: string;
+      phone: string;
+      email: string;
+      website: string;
+    };
+    representatives: {
+      title: string;
+      ceo: string;
+      cofounder: string;
+      cofounder2: string;
+    };
+    register: {
+      title: string;
+      court: string;
+      number: string;
+      vat: string;
+    };
+    responsibility: {
+      title: string;
+      content: string;
+      person: string;
+      address: string;
+    };
+    disclaimer: {
+      title: string;
+      content: string;
+      links: string;
+      copyright: string;
+    };
   };
 }

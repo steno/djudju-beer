@@ -87,6 +87,12 @@ const Navigation: React.FC = () => {
               >
                 {t('navigation.contact')}
               </Link>
+              <Link
+                to="/impressum"
+                className="text-beige hover:text-yellow-400 transition-colors text-lg"
+              >
+                {t('navigation.impressum')}
+              </Link>
               <button
                 onClick={toggleLanguage}
                 className="text-beige hover:text-yellow-400 transition-colors text-lg"
@@ -142,6 +148,13 @@ const Navigation: React.FC = () => {
                   onClick={closeMobileMenu}
                 >
                   {t('navigation.contact')}
+                </Link>
+                <Link
+                  to="/impressum"
+                  className="block text-white hover:text-yellow-400 transition-colors text-lg py-2"
+                  onClick={closeMobileMenu}
+                >
+                  {t('navigation.impressum')}
                 </Link>
                 <button
                   onClick={() => {
