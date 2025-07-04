@@ -44,8 +44,7 @@ const Impressum: React.FC = () => {
               <h2 className="font-akhio text-2xl mb-4">{t('impressum.representatives.title')}</h2>
               <div className="space-y-2 text-beige opacity-80">
                 <p>{t('impressum.representatives.ceo')}: David Nii Ayi Tagoe</p>
-                <p>{t('impressum.representatives.cofounder')}: Andy Nii Amah Tagoe</p>
-                <p>{t('impressum.representatives.cofounder2')}: Frank Nii Abbey Tagoe</p>
+          
               </div>
             </section>
 
