@@ -22,7 +22,7 @@ const Impressum: React.FC = () => {
             <section>
               <h2 className="font-akhio text-2xl mb-4">{t('impressum.company.title')}</h2>
               <div className="space-y-2 text-beige opacity-80">
-                <p>DjuDju Beer GmbH</p>
+                <p>D. Tagoe Imports</p>
                 <p>{t('impressum.company.address.line1')}</p>
                 <p>{t('impressum.company.address.line2')}</p>
                 <p>{t('impressum.company.address.line3')}</p>
