@@ -13,7 +13,7 @@ export const en: Translation = {
     playButton: 'Dont Miss Your Chance',
   },
   hero: {
-    title: 'Djudju Beer Family',
+    title: 'DjuDju Beer Family',
     subtitle: "Ready to taste magic?",
   },
   beers: {
