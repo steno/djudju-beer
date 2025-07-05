@@ -143,14 +143,7 @@ const ParallaxSection: React.FC<ParallaxSectionProps> = ({ flavor, index }) => {
   };
 
   const getOrderLink = (flavorName: string) => {
-    const links = {
-      'DjuDju Banana': 'https://www.africadrinks.de/?a=7',
-      'DjuDju Mango': 'https://www.africadrinks.de/?a=3',
-      'DjuDju Pineapple': 'https://www.africadrinks.de/?a=4',
-      'DjuDju Palm': 'https://www.africadrinks.de/?a=11',
-      'DjuDju Passion Fruit': 'https://www.africadrinks.de/?a=8'
-    };
-    return links[flavorName] || '#';
+    return 'https://amzn.eu/d/3BGzLJY';
   };
 
   return (
