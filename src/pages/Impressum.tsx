@@ -33,9 +33,9 @@ const Impressum: React.FC = () => {
             <section>
               <h2 className="font-akhio text-2xl mb-4">{t('impressum.contact.title')}</h2>
               <div className="space-y-2 text-beige opacity-80">
-                <p><strong>{t('impressum.contact.phone')}:</strong> +49 30 123456789</p>
-                <p><strong>{t('impressum.contact.email')}:</strong> info@djudju.com</p>
-                <p><strong>{t('impressum.contact.website')}:</strong> www.djudju.com</p>
+                <p><strong>{t('impressum.contact.phone')}:</strong> +49 30 30 8911602</p>
+                <p><strong>{t('impressum.contact.email')}:</strong> info@djudju.de</p>
+                <p><strong>{t('impressum.contact.website')}:</strong> www.djudju.de</p>
               </div>
             </section>
 
@@ -43,20 +43,12 @@ const Impressum: React.FC = () => {
             <section>
               <h2 className="font-akhio text-2xl mb-4">{t('impressum.representatives.title')}</h2>
               <div className="space-y-2 text-beige opacity-80">
-                <p>{t('impressum.representatives.ceo')}: David Nii Ayi Tagoe</p>
-          
+                <p>David Nii Ayi Tagoe</p>
+                <p>{t('impressum.register.vat')}: DE211838991</p>
               </div>
             </section>
 
-            {/* Commercial Register */}
-            <section>
-              <h2 className="font-akhio text-2xl mb-4">{t('impressum.register.title')}</h2>
-              <div className="space-y-2 text-beige opacity-80">
-                <p>{t('impressum.register.court')}: Amtsgericht Berlin-Charlottenburg</p>
-                <p>{t('impressum.register.number')}: HRB 123456</p>
-                <p>{t('impressum.register.vat')}: DE123456789</p>
-              </div>
-            </section>
+    
 
             {/* Content Responsibility */}
             <section>
