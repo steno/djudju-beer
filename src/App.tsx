@@ -303,7 +303,7 @@ const App: React.FC = () => {
           )}
 
           {/* Content layer */}
-          <div className={`relative z-10 mt-0 text-center text-beige w-full md:mt-32 transition-opacity duration-700 ${isVideoLoaded ? 'opacity-100' : 'opacity-0'}`}>
+          <div className={`relative z-10 mt-0 text-center text-beige w-full md:mt-32 transition-opacity duration-700 ${showVideo ? (isVideoLoaded ? 'opacity-100' : 'opacity-0') : 'opacity-100'}`}>
             <h1 className="font-akhio mt-4 text-4xl md:text-6xl font-bold mb-2">{t('hero.title')}</h1>
             <p className=" newfont text-lg md:text-xl mb-4">{t('hero.subtitle')}</p>
 
