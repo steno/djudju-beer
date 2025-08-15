@@ -143,7 +143,15 @@ const ParallaxSection: React.FC<ParallaxSectionProps> = ({ flavor, index }) => {
   };
 
   const getOrderLink = (flavorName: string) => {
-    return 'https://amzn.eu/d/3BGzLJY';
+    const linkMap: { [key: string]: string } = {
+      'DjuDju Banana': 'https://www.africadrinks.de/djudju-banana-beer-24x',
+      'DjuDju Mango': 'https://www.africadrinks.de/24x-DjuDju-Mango-Bier-033l',
+      'DjuDju Passion Fruit': 'https://www.africadrinks.de/24x-DjuDju-Passion-Fruit-Bier-033l',
+      'DjuDju Pineapple': 'https://www.africadrinks.de/24x-DjuDju-Pineapple-Bier-033l',
+      'DjuDju Palm': 'https://www.africadrinks.de/24x-DjuDju-Premium-Palm-Lager-Bier-033l'
+    };
+    
+    return linkMap[flavorName] || 'https://www.africadrinks.de/';
   };
 
   return (
