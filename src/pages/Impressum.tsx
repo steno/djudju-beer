@@ -1,12 +1,16 @@
 import React from 'react';
+import SimpleLayout from '../components/SimpleLayout';
 import { useTranslation } from '../hooks/useTranslation';
+import { useScrollToTop } from '../hooks/useScrollToTop';
 
 const Impressum: React.FC = () => {
   const { t } = useTranslation();
+  useScrollToTop();
 
   return (
-    <div className="min-h-screen bg-brown text-beige pt-20">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <SimpleLayout>
+      <div className="min-h-screen bg-brown text-beige pt-20">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center mb-12">
           <h1 className="font-akhio text-4xl md:text-5xl mb-4">
             {t('impressum.title')}
@@ -71,8 +75,9 @@ const Impressum: React.FC = () => {
             </section>
           </div>
         </div>
+        </div>
       </div>
-    </div>
+    </SimpleLayout>
   );
 };
 
