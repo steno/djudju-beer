@@ -234,9 +234,9 @@ const App: React.FC = () => {
       filter: 'blur(0px)',
       scale: 1,
       transition: {
-        opacity: { duration: 0.5 },
-        filter: { duration: 0.5 },
-        scale: { duration: 0.5 },
+        opacity: { duration: 0.2 },
+        filter: { duration: 0.2 },
+        scale: { duration: 0.2 },
       },
     },
     exit: {
@@ -244,9 +244,9 @@ const App: React.FC = () => {
       filter: 'blur(10px)',
       scale: 0.95,
       transition: {
-        opacity: { duration: 0.5 },
-        filter: { duration: 0.5 },
-        scale: { duration: 0.5 },
+        opacity: { duration: 0.2 },
+        filter: { duration: 0.2 },
+        scale: { duration: 0.2 },
       },
     },
   };
