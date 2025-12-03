@@ -18,10 +18,19 @@
     <link rel="icon" href="https://mdfeywsadyvaqhsdbxqb.supabase.co/storage/v1/object/public/images/favicon.png" sizes="48x48" />
     <link rel="apple-touch-icon" href="/public/images/djudju-logo.png" />
     
+    <!-- Resource hints for external domains -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+    <!-- Use preconnect for Supabase domains since we load critical resources from them -->
+    <link rel="preconnect" href="https://mdfeywsadyvaqhsdbxqb.supabase.co" crossorigin />
+    <link rel="preconnect" href="https://frdmalzedskscaopornt.supabase.co" crossorigin />
+    
+    <!-- Preload critical resources for faster FCP -->
+    <link rel="preload" href="/images/djudju-logo.png" as="image" fetchpriority="high" />
+    
+    <!-- Optimized: Combined font request with display=swap for non-blocking rendering -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto:wght@400;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto:wght@400;600&display=swap" rel="stylesheet" /></noscript>
   </head>
   <body>
     <div id="root"></div>

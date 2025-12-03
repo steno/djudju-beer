@@ -29,7 +29,7 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   return (
     <AudioContext.Provider value={{ isSoundPlaying, toggleSound }}>
-      <audio ref={audioRef} loop preload="auto" crossOrigin="anonymous">
+      <audio ref={audioRef} loop preload="metadata" crossOrigin="anonymous">
         <source src={audioUrl} type="audio/mpeg" />
         Your browser does not support the audio element.
       </audio>

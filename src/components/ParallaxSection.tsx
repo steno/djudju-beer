@@ -293,7 +293,7 @@ const ParallaxSection: React.FC<ParallaxSectionProps> = ({ flavor, index }) => {
               loop
               muted
               playsInline
-              preload="auto"
+              preload="metadata"
               crossOrigin="anonymous"
               className="absolute inset-0 w-full h-full object-cover"
               style={{ mixBlendMode: 'soft-light' }}

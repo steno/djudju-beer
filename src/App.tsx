@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { HiSpeakerWave, HiSpeakerXMark, HiPlay } from 'react-icons/hi2';
 import { HandDrawnPalmtree, HandDrawnSun, HandDrawnFlower, HandDrawnChevronLeft, HandDrawnChevronRight } from './components/icons';
 import Layout from './components/layout/Layout';
-import ParallaxSection from './components/ParallaxSection';
+import LazyParallaxSection from './components/LazyParallaxSection';
 import AgeVerification from './components/AgeVerification';
 import CookieConsent from './components/CookieConsent';
 import { useParallax } from './hooks/useParallax';
@@ -58,46 +58,94 @@ const App: React.FC = () => {
     }
   };
 
+  // Defer scroll listener to avoid blocking initial render
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
+    // Use requestIdleCallback to defer non-critical scroll listener
+    const setupScrollListener = () => {
+      window.addEventListener('scroll', handleScroll);
+    };
+    
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(setupScrollListener, { timeout: 1000 });
+    } else {
+      setTimeout(setupScrollListener, 100);
+    }
+    
     return () => window.removeEventListener('scroll', handleScroll);
   }, [handleScroll]);
 
+  // Defer video loading to avoid blocking initial render
   useEffect(() => {
     if (!showVideo || !videoRef.current) return;
 
-    const video = videoRef.current;
+    let mounted = true;
+    let idleCallbackId: number | null = null;
+    let timeoutId: NodeJS.Timeout | null = null;
+    let cleanupVideo: (() => void) | null = null;
 
-    const handleError = () => {
-      setVideoError('Error loading video');
-      setIsVideoLoaded(true);
+    // Defer video setup to avoid blocking critical rendering
+    const setupVideo = () => {
+      if (!mounted || !videoRef.current) return;
+      
+      const video = videoRef.current;
+
+      const handleError = () => {
+        if (!mounted) return;
+        setVideoError('Error loading video');
+        setIsVideoLoaded(true);
+      };
+
+      const handleLoadedData = () => {
+        if (!mounted) return;
+        setVideoError(null);
+        setIsVideoLoaded(true);
+        video.play().catch(error => {
+          if (mounted) {
+            setVideoError(`Error playing video: ${error.message}`);
+          }
+        });
+      };
+
+      video.addEventListener('error', handleError);
+      video.addEventListener('loadeddata', handleLoadedData);
+
+      cleanupVideo = () => {
+        video.removeEventListener('error', handleError);
+        video.removeEventListener('loadeddata', handleLoadedData);
+      };
+
+      if (!video.src && !videoCache[heroBackgroundUrl]) {
+        video.src = heroBackgroundUrl;
+        videoCache[heroBackgroundUrl] = video;
+      } else if (videoCache[heroBackgroundUrl] && videoCache[heroBackgroundUrl].readyState >= 2) {
+        video.src = heroBackgroundUrl;
+        handleLoadedData();
+      }
     };
 
-    const handleLoadedData = () => {
-      setVideoError(null);
-      setIsVideoLoaded(true);
-      video.play().catch(error => {
-        setVideoError(`Error playing video: ${error.message}`);
-      });
-    };
-
-    video.addEventListener('error', handleError);
-    video.addEventListener('loadeddata', handleLoadedData);
-
-    if (!video.src && !videoCache[heroBackgroundUrl]) {
-      video.src = heroBackgroundUrl;
-      videoCache[heroBackgroundUrl] = video;
-    } else if (videoCache[heroBackgroundUrl] && videoCache[heroBackgroundUrl].readyState >= 2) {
-      video.src = heroBackgroundUrl;
-      handleLoadedData();
+    // Use requestIdleCallback to defer video loading
+    if ('requestIdleCallback' in window) {
+      idleCallbackId = requestIdleCallback(setupVideo, { timeout: 2000 });
+    } else {
+      timeoutId = setTimeout(setupVideo, 200);
     }
 
     return () => {
-      video.removeEventListener('error', handleError);
-      video.removeEventListener('loadeddata', handleLoadedData);
+      mounted = false;
+      if (cleanupVideo) {
+        cleanupVideo();
+      }
+      if (idleCallbackId !== null && 'cancelIdleCallback' in window) {
+        cancelIdleCallback(idleCallbackId);
+      }
+      if (timeoutId !== null) {
+        clearTimeout(timeoutId);
+      }
     };
-  }, [showVideo, videoRef, heroBackgroundUrl]);
+  }, [showVideo, heroBackgroundUrl]);
 
+  // Modal video (promotional video) - loads on all devices when modal is opened
+  // This is separate from background videos and should always be available
   useEffect(() => {
     if (!modalVideoRef.current) return;
 
@@ -133,11 +181,29 @@ const App: React.FC = () => {
     };
   }, [modalVideoUrl, isVideoModalOpen]);
 
+  // Check screen size immediately but defer resize listener
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    const checkScreen = () => setShowVideo(window.innerWidth >= 768);
+    const checkScreen = () => {
+      const shouldShow = window.innerWidth >= 768;
+      setShowVideo(shouldShow);
+      // Clear video src when switching to mobile to prevent loading
+      if (!shouldShow && videoRef.current) {
+        videoRef.current.src = '';
+        videoRef.current.load(); // Reset video element
+      }
+    };
+    // Check immediately for initial render
     checkScreen();
-    window.addEventListener('resize', checkScreen);
+    // Defer resize listener to avoid blocking
+    const setupResizeListener = () => {
+      window.addEventListener('resize', checkScreen);
+    };
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(setupResizeListener, { timeout: 1000 });
+    } else {
+      setTimeout(setupResizeListener, 100);
+    }
     return () => window.removeEventListener('resize', checkScreen);
   }, []);
 
@@ -262,21 +328,21 @@ const App: React.FC = () => {
           className="h-screen relative overflow-hidden flex items-center justify-center"
         >
           {/* Background color layer (gradient) */}
-          <div className="absolute inset-0 herogold" style={{ zIndex: 1 }} />
+          <div className="absolute inset-0 herogold" />
 
           {/* New div layer above gradient */}
-          <div className="absolute inset-0 heropattern" style={{ zIndex: 2 }} />
+          <div className="absolute inset-0 heropattern" />
 
           {/* Video layer */}
           {showVideo && isVideo && (
-            <div className="absolute inset-0 opacity-20 w-full h-full" style={{ zIndex: 3 }}>
+            <div className="absolute inset-0 opacity-20 w-full h-full">
               <video
                 ref={videoRef}
                 autoPlay
                 loop
                 muted
                 playsInline
-                preload="auto"
+                preload="metadata"
                 crossOrigin="anonymous"
                 className={`absolute inset-0 w-full h-full object-cover ${
                   !isVideoLoaded ? 'opacity-0' : 'opacity-100'
@@ -290,20 +356,8 @@ const App: React.FC = () => {
             </div>
           )}
 
-          {/* Spinner overlay while video is loading */}
-          {showVideo && !isVideoLoaded && (
-            <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/30 transition-opacity duration-500">
-              <img
-                src="/images/djudju-logo.png"
-                alt="Loading..."
-                className="w-20 h-20 animate-spin"
-                style={{ filter: 'drop-shadow(0 0 8px #F5E8C7)' }}
-              />
-            </div>
-          )}
-
-          {/* Content layer */}
-          <div className={`relative z-10 mt-0 text-center text-beige w-full md:mt-32 transition-opacity duration-700 ${showVideo ? (isVideoLoaded ? 'opacity-100' : 'opacity-0') : 'opacity-100'}`}>
+          {/* Content layer - Show immediately for better FCP */}
+          <div className="relative z-10 mt-0 text-center text-beige w-full md:mt-32">
             <h1 className="font-akhio mt-4 text-4xl md:text-6xl font-bold mb-2">{t('hero.title')}</h1>
             <p className=" newfont text-lg md:text-xl mb-4">{t('hero.subtitle')}</p>
 
@@ -364,7 +418,7 @@ const App: React.FC = () => {
                           src={flavors[currentFlavorIndex].bottleImage}
                           alt={`${flavors[currentFlavorIndex].name} bottle`}
                           className="h-[50vh] w-auto object-contain max-w-full"
-                          loading="lazy"
+                          fetchPriority="high"
                         />
                       </button>
                       <span className="bcap mt-4 text-beige text-xl font-semibold bg-black/70 px-4 py-2 rounded-sm shadow-md pointer-events-none">
@@ -470,13 +524,13 @@ const App: React.FC = () => {
           </div>
         )}
 
-        {/* Flavor Sections */}
+        {/* Flavor Sections - Lazy loaded for better performance */}
         {flavors.map((flavor, index) => (
-          <ParallaxSection
+          <LazyParallaxSection
             key={flavor.name}
             flavor={{
               ...flavor,
-              description: flavor.description(t),
+              description: flavor.description(t as (key: string) => string),
             }}
             index={index}
           />

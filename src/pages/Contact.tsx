@@ -51,7 +51,15 @@ const Contact: React.FC = () => {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    const checkScreen = () => setShowVideo(window.innerWidth >= 768);
+    const checkScreen = () => {
+      const shouldShow = window.innerWidth >= 768;
+      setShowVideo(shouldShow);
+      // Clear video src when switching to mobile to prevent loading
+      if (!shouldShow && videoRef.current) {
+        videoRef.current.src = '';
+        videoRef.current.load(); // Reset video element
+      }
+    };
     checkScreen();
     window.addEventListener('resize', checkScreen);
     return () => window.removeEventListener('resize', checkScreen);
@@ -74,7 +82,7 @@ const Contact: React.FC = () => {
               loop
               muted
               playsInline
-              preload="auto"
+              preload="metadata"
               crossOrigin="anonymous"
               className={`absolute inset-0 w-full h-full object-top object-cover ${
                 !isVideoLoaded ? 'opacity-0' : 'opacity-100'

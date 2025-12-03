@@ -24,8 +24,34 @@ export const useVideoPreload = (videoUrls: string[]): VideoPreloadState => {
       return;
     }
 
+    // Defer video preloading to avoid blocking critical resources
+    // Use requestIdleCallback for better performance, fallback to DOMContentLoaded
+    const delayPreload = () => {
+      if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        // Use requestIdleCallback if available for non-blocking preload
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(startPreload, { timeout: 2000 });
+        } else {
+          // Fallback: start after a short delay to let critical resources load first
+          setTimeout(startPreload, 100);
+        }
+      } else {
+        // Wait for DOM to be ready, but don't wait for all resources
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', () => {
+            if ('requestIdleCallback' in window) {
+              requestIdleCallback(startPreload, { timeout: 2000 });
+            } else {
+              setTimeout(startPreload, 100);
+            }
+          }, { once: true });
+        }
+      }
+    };
+
     const videos: HTMLVideoElement[] = [];
     let mounted = true;
+    let timeoutId: NodeJS.Timeout | null = null;
 
     const cleanup = () => {
       videos.forEach(video => {
@@ -33,6 +59,10 @@ export const useVideoPreload = (videoUrls: string[]): VideoPreloadState => {
         video.removeEventListener('error', handleError);
         video.remove(); // Remove video element from memory
       });
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+        timeoutId = null;
+      }
     };
 
     const handleLoad = () => {
@@ -69,46 +99,55 @@ export const useVideoPreload = (videoUrls: string[]): VideoPreloadState => {
       }
     };
 
-    try {
-      videoUrls.forEach(url => {
-        if (!url) return;
+    const startPreload = () => {
+      if (!mounted) return;
 
-        const video = document.createElement('video');
-        videos.push(video);
+      try {
+        videoUrls.forEach(url => {
+          if (!url) return;
 
-        video.muted = true;
-        video.preload = 'metadata';
-        video.crossOrigin = 'anonymous';
+          const video = document.createElement('video');
+          videos.push(video);
 
-        video.addEventListener('loadedmetadata', handleLoad);
-        video.addEventListener('error', handleError);
+          video.muted = true;
+          video.preload = 'metadata';
+          video.crossOrigin = 'anonymous';
 
-        // Set source last to start loading
-        video.src = url;
-      });
+          video.addEventListener('loadedmetadata', handleLoad);
+          video.addEventListener('error', handleError);
 
-      // Set a timeout to prevent infinite loading
-      const timeoutId = setTimeout(() => {
-        if (!mounted) return;
-        
-        setState(prev => ({
-          isLoaded: true, // Mark as loaded even if timeout to prevent hanging
-          error: 'Video preload timeout'
-        }));
-      }, 10000); // 10 second timeout
+          // Set source last to start loading
+          video.src = url;
+        });
 
-      return () => {
-        mounted = false;
-        clearTimeout(timeoutId);
-        cleanup();
-      };
-    } catch (error) {
-      console.error('Video preload setup error:', error);
-      setState({
-        isLoaded: true, // Mark as loaded even with errors to prevent hanging
-        error: error instanceof Error ? error.message : 'Failed to setup video preload'
-      });
-    }
+        // Set a timeout to prevent infinite loading
+        timeoutId = setTimeout(() => {
+          if (!mounted) return;
+          
+          setState(prev => ({
+            isLoaded: true, // Mark as loaded even if timeout to prevent hanging
+            error: 'Video preload timeout'
+          }));
+        }, 10000); // 10 second timeout
+      } catch (error) {
+        console.error('Video preload setup error:', error);
+        if (mounted) {
+          setState({
+            isLoaded: true, // Mark as loaded even with errors to prevent hanging
+            error: error instanceof Error ? error.message : 'Failed to setup video preload'
+          });
+        }
+      }
+    };
+
+    // Start deferred preloading
+    delayPreload();
+
+    return () => {
+      mounted = false;
+      window.removeEventListener('load', startPreload);
+      cleanup();
+    };
   }, [videoUrls.join(',')]); // Only re-run if URLs change
 
   return state;

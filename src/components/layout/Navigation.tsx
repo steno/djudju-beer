@@ -12,13 +12,24 @@ const Navigation: React.FC = () => {
   const { t } = useTranslation();
   const { language, setLanguage } = useLanguage();
 
+  // Defer scroll listener to avoid blocking initial render
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
       setShowBackToTop(window.scrollY > 500);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    // Use requestIdleCallback to defer scroll listener setup
+    const setupScrollListener = () => {
+      window.addEventListener('scroll', handleScroll);
+    };
+    
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(setupScrollListener, { timeout: 1000 });
+    } else {
+      setTimeout(setupScrollListener, 100);
+    }
+    
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -63,6 +74,7 @@ const Navigation: React.FC = () => {
                   src="/images/djudju-logo.png" 
                   alt="DjuDju Beer" 
                   className="h-full w-auto"
+                  fetchPriority="high"
                 />
               </Link>
             </div>

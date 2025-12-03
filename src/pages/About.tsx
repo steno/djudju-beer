@@ -55,7 +55,19 @@ const About: React.FC = () => {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    const checkScreen = () => setShowVideo(window.innerWidth >= 768);
+    const checkScreen = () => {
+      const shouldShow = window.innerWidth >= 768;
+      setShowVideo(shouldShow);
+      // Clear video src when switching to mobile to prevent loading
+      if (!shouldShow && videoRef.current) {
+        videoRef.current.src = '';
+        videoRef.current.load(); // Reset video element
+      }
+      if (!shouldShow && storyVideoRef.current) {
+        storyVideoRef.current.src = '';
+        storyVideoRef.current.load(); // Reset video element
+      }
+    };
     checkScreen();
     window.addEventListener('resize', checkScreen);
     return () => window.removeEventListener('resize', checkScreen);
@@ -87,7 +99,7 @@ const About: React.FC = () => {
               loop
               muted
               playsInline
-              preload="auto"
+              preload="metadata"
               crossOrigin="anonymous"
               className={`absolute inset-0 w-full h-full object-top object-cover ${
                 !isVideoLoaded ? 'opacity-0' : 'opacity-100'
@@ -171,7 +183,7 @@ const About: React.FC = () => {
               loop
               muted
               playsInline
-              preload="auto"
+              preload="metadata"
               crossOrigin="anonymous"
               className={`absolute inset-0 w-full h-full object-top object-cover ${
                 !isStoryVideoLoaded ? 'opacity-0' : 'opacity-100'
@@ -196,6 +208,7 @@ const About: React.FC = () => {
                 src="https://mdfeywsadyvaqhsdbxqb.supabase.co/storage/v1/object/public/images//beermeile.jpg"
                 alt="DjuDju Beer Mile"
                 className="w-full h-96 md:h-full object-cover rounded-lg shadow-lg"
+                loading="lazy"
               />
             </motion.div>
             <motion.div
@@ -263,7 +276,7 @@ const About: React.FC = () => {
                 className="text-center"
               >
                 <div className="relative w-48 h-48 mx-auto mb-6">
-                  <img src={member.image} alt={member.name} className="w-full h-full object-cover rounded-full" />
+                  <img src={member.image} alt={member.name} className="w-full h-full object-cover rounded-full" loading="lazy" />
                 </div>
                 <h3 className="font-akhio text-2xl mb-2 text-brown">{member.name}</h3>
                 <p className="text-yellow-600 font-semibold mb-3">{member.role}</p>
