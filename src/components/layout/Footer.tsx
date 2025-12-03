@@ -70,7 +70,7 @@ const Footer: React.FC = () => {
 
         <div className="mt-12 pt-8 border-t border-gray-800">
           <p className="text-center text-beige opacity-50">
-            {t('footer.rights')}
+            {t('footer.rights').replace('2024', new Date().getFullYear().toString())}
           </p>
         </div>
       </div>
